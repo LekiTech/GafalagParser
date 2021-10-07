@@ -27,7 +27,6 @@ public class Dictionary {
             this.item = element;
             this.next = next;
             this.prev = prev;
-
         }
     }
 
@@ -48,25 +47,35 @@ public class Dictionary {
         for (Node node = first; node != last; node = node.next) {
             final String text = node.item.getText().trim();
             if (node.item.isFirst()) {
-                if (text.matches("\\p{Punct}")) {
-                    key.append(text);
-                } else {
-                    key.append(" ").append(text);
-                }
+                key.append(text).append(" ");
             } else {
-                if (text.matches("\\p{Punct}")) {
-                    value.append(text);
-                } else {
-                    value.append(" ").append(text);
-                }
+                value.append(text).append(" ");
                 if (node.next.item.isFirst()) {
-                    dictionary.put(key.toString().trim(), value.toString().trim());
+                    dictionary.put(replace(key), replace(value));
                     key.setLength(0);
                     value.setLength(0);
                 }
             }
         }
+        dictionary.put(replace(key), replace(value));
         return dictionary;
     }
-}
 
+    private String replace(StringBuilder sb) {
+        return sb.toString().trim()
+                .replace(" - ", "-")
+                .replace("( ", "(")
+                .replace(" )", ")")
+                .replace(" ;", ";")
+                .replace(" .", ".")
+                .replace(" ,", ",")
+                .replace(" ,", ",")
+                .replace(" ?", "?")
+                .replace(" !", "!")
+                .replace("1.", "1)")
+                .replace("2.", "2)")
+                .replace("3.", "3)")
+                .replace("4.", "4)")
+                .replace(" I ", "I");
+    }
+}
