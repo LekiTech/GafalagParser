@@ -19,20 +19,18 @@ public class Dictionary {
 
     private static class Node {
 
-        private Word item;
+        private final Word item;
         private Node next;
-        private Node prev;
 
-        Node(Node prev, Word element, Node next) {
+        Node(Word element, Node next) {
             this.item = element;
             this.next = next;
-            this.prev = prev;
         }
     }
 
     public void add(Word value) {
         final Node l = last;
-        final Node newNode = new Node(l, value, null);
+        final Node newNode = new Node(value, null);
         last = newNode;
         if (l == null) {
             first = newNode;

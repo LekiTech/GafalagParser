@@ -10,6 +10,7 @@ package org.lekitech.gafalag.jsonmodels;
  */
 public class Fill {
 
+    public String oc;
     public double x;
     public double y;
     public double w;
