@@ -27,26 +27,11 @@ public class Text {
     private final String COLOR_OF_THE_FIRST_WORD = "#003365";
     private final String COLOR_OF_THE_EXPLANATION = "#007f00";
     private final String COLOR_DEFAULT = "#261300"; // like black color #000000
-
-    private final Predicate<R> SKIP_ELEMENTS_ATR = r -> (
-            r.getStyle() == 3 && r.getFontType().get(1) == 12) || (this.getY() == PAGE_NUMBER_POS
-    );
-    private final Predicate<R> WORD_OF_LEZGI_EXAMPLE = r -> {
-        final List<Double> font = r.getFontType();
-        return font.get(0).intValue() == 2 && font.get(1).intValue() == 14 && getColor().equals(COLOR_DEFAULT);
-    };
-    private final Predicate<R> WORD_OF_EXPLANATION = r -> {
-        final List<Double> font = r.getFontType();
-        return font.get(0).intValue() == 2 && font.get(1).intValue() == 13 && getColor().equals(COLOR_OF_THE_EXPLANATION);
-    };
-    private final Predicate<R> DEFAULT_TEXT_RUS = r -> {
-        final List<Double> font = r.getFontType();
-        return font.get(0).intValue() == 2 && font.get(1).intValue() == 13 && getColor().equals(COLOR_DEFAULT);
-    };
-    private final Predicate<R> WORD_FOR_TRANSLATE = r -> {
-        final List<Double> font = r.getFontType();
-        return font.get(0).intValue() == 2 && font.get(1).intValue() == 14 && getColor().equals(COLOR_OF_THE_FIRST_WORD);
-    };
+    private final Predicate<R> SKIP_ELEMENTS_ATR = r -> (r.getStyle() == 3 && getFontSize() == 12) || (this.getY() == PAGE_NUMBER_POS);
+    private final Predicate<R> WORD_OF_LEZGI_EXAMPLE = r -> getFontStyle() == 2 && getFontSize() == 14 && isBold() && getColor().equals(COLOR_DEFAULT);
+    private final Predicate<R> WORD_OF_EXPLANATION = r -> getFontStyle() == 2 && getFontSize() == 13 && getColor().equals(COLOR_OF_THE_EXPLANATION);
+    private final Predicate<R> DEFAULT_TEXT_RUS = r -> getFontStyle() == 2 && getFontSize() == 13 && getColor().equals(COLOR_DEFAULT);
+    private final Predicate<R> WORD_FOR_TRANSLATE = r -> getFontStyle() == 2 && getFontSize() == 14 && isBold() && getColor().equals(COLOR_OF_THE_FIRST_WORD);
 
     private String oc;
     private double x, y, w, sw, clr;
@@ -63,5 +48,21 @@ public class Text {
 
     public String getColor() {
         return Optional.of(oc).orElse("#000000");
+    }
+
+    private int getFontStyle() {
+        return r.get(0).getStyle();
+    }
+
+    private int getFontSize() {
+        return r.get(0).getFontType().get(1).intValue();
+    }
+
+    public boolean isBold() {
+        return r.get(0).getFontType().get(2).intValue() == 1;
+    }
+
+    public boolean isItalic() {
+        return r.get(0).getFontType().get(3).intValue() == 1;
     }
 }
