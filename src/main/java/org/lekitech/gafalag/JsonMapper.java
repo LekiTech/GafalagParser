@@ -20,13 +20,11 @@ import java.util.function.Consumer;
  */
 public class JsonMapper {
 
-
     public static void main(String[] args) throws IOException {
         final ObjectMapper mapper = new ObjectMapper();
         final File file = new File("src/main/resources/dictionary.json");
         final List<Page> pages = mapper.readerFor(new TypeReference<List<Page>>() {
         }).readValue(file);
-
         final Consumer<Text> print = text -> {
             if (text.isNewWord()) {
                 System.out.println();
@@ -34,6 +32,5 @@ public class JsonMapper {
             System.out.print(text.get());
         };
         pages.stream().limit(4).flatMap(page -> page.getTextData().stream()).forEach(print);
-
     }
 }
