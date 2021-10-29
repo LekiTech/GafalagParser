@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-import java.util.LinkedList;
-
-import static org.lekitech.gafalag.jsonmodels.Color.BLACK;
-import static org.lekitech.gafalag.jsonmodels.Color.BLUE;
+import java.util.List;
 
 /**
  * Date: 15.10.2021
@@ -20,51 +17,21 @@ import static org.lekitech.gafalag.jsonmodels.Color.BLUE;
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"A"})
+@JsonIgnoreProperties(value = {"A", "sw", "w"})
 public class Text {
 
     @JsonProperty("oc")
-    private String color;
-    private double x, y, w, sw, clr;
-    @JsonProperty("R")
-    private LinkedList<R> r;
+    private String originColorHex;
 
-    public boolean isHeader() {
-        return getColor().equals(BLUE) && isBold();
-    }
 
-    public boolean isIdiom() {
-        return getColor().equals(BLACK) && isBold();
-    }
+    @JsonProperty("clr")
+    private int color;
 
-    public boolean isDefault() {
-        return getFontSize() == 13.02 && !isBold();
-    }
-
-    public boolean isNewEntry() {
-        return getX() == 2.337 && isHeader();
-    }
+    private double x, y;
 
     /**
-     * @return Возвращает область страницы без верхнего колонтитула.
+     * "Run": an array of text run
      */
-    public boolean isValidZone() {
-        return getY() > 1.012;
-    }
-
-    public String value() {
-        return isValidZone() ? r.get(0).getText() : null;
-    }
-
-    public Color getColor() {
-        return Color.ofHex(color);
-    }
-
-    public double getFontSize() {
-        return r.get(0).getFontType().get(1);
-    }
-
-    public boolean isBold() {
-        return r.get(0).getFontType().get(2) == 1;
-    }
+    @JsonProperty("R")
+    private List<Run> run;
 }

@@ -24,9 +24,16 @@ public enum Color {
         this.hex = hex;
     }
 
-    public static Color ofHex(String hex) {
+    public static Color ofText(Text textBlock) {
         return Arrays.stream(values())
-                .filter(value -> value.hex.equals(hex))
+                .filter(color -> color.hex.equals(textBlock.getOriginColorHex()))
+                .findFirst()
+                .orElse(BLACK);
+    }
+
+    public static Color ofHex(Text textBlock) {
+        return Arrays.stream(values())
+                .filter(value -> value.hex.equals(textBlock.getOriginColorHex()))
                 .findFirst()
                 .orElse(BLACK);
     }

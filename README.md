@@ -1,2 +1,4 @@
-# GafalagParser
-Parser PDF to JSON object
+# Gafalag Parser
+
+Normalization of the JSON-Object (to dictionary form).
+

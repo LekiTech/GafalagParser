@@ -11,8 +11,8 @@ package org.lekitech.gafalag;
 public class MapperUsage {
 
     public static void main(String[] args) {
-        final JsonMapper jsonMapper = new JsonMapper("src/main/resources/dictionary.json");
-        jsonMapper.printJSON();
-        jsonMapper.writeJSON("result.json");
+        final DictionaryMapper dictionaryMapper = new DictionaryMapper("src/main/resources/dictionary.json");
+        dictionaryMapper.printJSON();
+//        dictionaryMapper.writeJSON("result.json");
     }
 }
