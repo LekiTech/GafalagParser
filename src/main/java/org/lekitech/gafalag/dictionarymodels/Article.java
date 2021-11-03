@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -32,17 +30,16 @@ public class Article {
     /**
      * Заглавное слово, сведения о его орфографии, произношении, ударении.
      */
-    @JsonProperty("head")
-    private String head;
+    @JsonProperty("exp")
+    private String expression;
     /**
-     * Грамматическая зона: указание грамматических категорий (часть речи, род, вид и т.п.), опорные словоформы;
-     * возможные варианты.
+     * Опорные словоформы, возможные варианты.
      */
-    @JsonProperty("forms")
-    private String forms;
+    @JsonProperty("inf")
+    private String inflection;
     /**
      * Зона значения: семантика, фразеологизмы, метки
      */
     @JsonProperty("def")
-    private List<String> jsonObjects;
+    private List<String> definition;
 }

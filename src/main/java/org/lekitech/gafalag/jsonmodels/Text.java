@@ -17,21 +17,12 @@ import java.util.List;
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"A", "sw", "w"})
+@JsonIgnoreProperties(value = {"A", "sw", "w", "clr"})
 public class Text {
 
     @JsonProperty("oc")
     private String originColorHex;
-
-
-    @JsonProperty("clr")
-    private int color;
-
     private double x, y;
-
-    /**
-     * "Run": an array of text run
-     */
     @JsonProperty("R")
-    private List<Run> run;
+    private List<Run> run; // an array of text run
 }

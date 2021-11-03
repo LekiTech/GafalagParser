@@ -1,6 +1,7 @@
 package org.lekitech.gafalag.jsonmodels;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Date: 17.10.2021
@@ -24,16 +25,9 @@ public enum Color {
         this.hex = hex;
     }
 
-    public static Color ofText(Text textBlock) {
+    public static Color of(Text textBlock) {
         return Arrays.stream(values())
-                .filter(color -> color.hex.equals(textBlock.getOriginColorHex()))
-                .findFirst()
-                .orElse(BLACK);
-    }
-
-    public static Color ofHex(Text textBlock) {
-        return Arrays.stream(values())
-                .filter(value -> value.hex.equals(textBlock.getOriginColorHex()))
+                .filter(color -> Objects.equals(color.hex, textBlock.getOriginColorHex()))
                 .findFirst()
                 .orElse(BLACK);
     }
