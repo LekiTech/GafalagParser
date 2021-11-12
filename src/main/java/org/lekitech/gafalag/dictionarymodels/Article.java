@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 15.10.2021
  * Project: GafalagParser
  * <p>
- * Class: EntryWord - Словарная статья, состоящая из заглавной единицы и текста,
+ * Class: Article - Словарная статья, состоящая из заглавной единицы и текста,
  * разъясняющего заголовочную единицу и описывающего её основные характеристики.
  *
  * @author Enver Eskendarov (envereskendarov@gmail.com)
@@ -25,22 +25,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class EntryWord {
+public class Article {
 
     /**
      * Заглавное слово, сведения о его орфографии, произношении, ударении.
      */
-    @JsonProperty("head")
-    private String head;
+    @JsonProperty("exp")
+    private String expression;
     /**
-     * Грамматическая зона: указание грамматических категорий (часть речи, род, вид и т.п.), опорные словоформы;
-     * возможные варианты.
+     * Опорные словоформы, возможные варианты.
      */
-    @JsonProperty("inflection")
+    @JsonProperty("inf")
     private String inflection;
     /**
      * Зона значения: семантика, фразеологизмы, метки
      */
-    @JsonProperty("definition")
-    private List<String> definitions;
+    @JsonProperty("def")
+    private List<String> definition;
 }

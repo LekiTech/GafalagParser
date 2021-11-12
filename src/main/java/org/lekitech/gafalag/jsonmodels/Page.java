@@ -1,6 +1,5 @@
 package org.lekitech.gafalag.jsonmodels;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -20,9 +19,20 @@ import java.util.List;
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"Height", "HLines", "VLines", "Fills", "Fields", "Boxsets"})
 public class Page {
 
+    @JsonProperty("Height")
+    private double height;
+    @JsonProperty("HLines")
+    private List<Object> hLines;
+    @JsonProperty("VLines")
+    private List<Object> vLines;
+    @JsonProperty("Fills")
+    private List<Fill> fills;
     @JsonProperty("Texts")
-    private List<Text> textOfPage;
+    private List<Text> textBlocks;
+    @JsonProperty("Fields")
+    private List<Object> fields;
+    @JsonProperty("Boxsets")
+    private List<Object> boxsets;
 }
