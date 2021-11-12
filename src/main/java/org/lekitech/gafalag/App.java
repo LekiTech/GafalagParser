@@ -1,9 +1,9 @@
 package org.lekitech.gafalag;
 
-import org.lekitech.gafalag.dictionarymodels.Article;
-import org.lekitech.gafalag.jsonmodels.Deserializer;
-
-import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.lekitech.gafalag.hibernate.entity.Language;
+import org.lekitech.gafalag.hibernate.util.HibernateUtil;
 
 /**
  * Date: 12.11.2021
@@ -16,9 +16,19 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
-        final DictionaryMapper mapper = new DictionaryMapper(new Deserializer("dictionary.json"));
-        final List<Article> dictionary = mapper.init().getDictionary();
-        final DBConnection connection = new DBConnection();
-        dictionary.forEach(connection::add);
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            final Language lezgi = new Language("Lezgi", "lz", "lez");
+            final Language russian = new Language("Russian", "ru", "rus");
+            transaction = session.beginTransaction();
+            session.save(lezgi);
+            session.save(russian);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 }
