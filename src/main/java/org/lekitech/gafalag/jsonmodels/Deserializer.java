@@ -41,10 +41,15 @@ public class Deserializer {
     }
 
     public Deserializer initTokens() {
-        tokens = pages.stream().skip(beginPage > 1 ? beginPage - 1 : 0)
-                .limit(endPage > 2 && endPage > beginPage ? endPage + 1 - beginPage : 1)
-                .flatMap(page -> page.getTextBlocks().stream())
-                .collect(Collectors.toList());
+        if (beginPage == 0 && endPage == 0) {
+            tokens = pages.stream().flatMap(page -> page.getTextBlocks().stream())
+                    .collect(Collectors.toList());
+        } else {
+            tokens = pages.stream().skip(beginPage > 1 ? beginPage - 1 : 0)
+                    .limit(endPage > 2 && endPage > beginPage ? endPage + 1 - beginPage : 1)
+                    .flatMap(page -> page.getTextBlocks().stream())
+                    .collect(Collectors.toList());
+        }
         return this;
     }
 }
