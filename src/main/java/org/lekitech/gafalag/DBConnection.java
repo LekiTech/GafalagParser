@@ -1,6 +1,5 @@
 package org.lekitech.gafalag;
 
-import org.json.JSONArray;
 import org.lekitech.gafalag.dictionarymodels.Article;
 
 import java.io.FileInputStream;
@@ -44,17 +43,21 @@ public class DBConnection implements AutoCloseable {
         }
     }
 
-    public void add(Article article) {
+    public boolean add(Article article) {
+        boolean res = false;
         try (PreparedStatement statement = connection
-                .prepareStatement("insert into lez_rus(expression, inflection, definition) values (?,?,?)")
+                .prepareStatement("INSERT INTO lez_rus(expression, inflection, definition) VALUES (?,?,?)")
         ) {
             statement.setString(1, article.getExpression());
             statement.setString(2, article.getInflection());
-            statement.setString(3, new JSONArray(article.getDefinition()).toString());
-            statement.execute();
+            statement.setArray(3, connection.createArrayOf(
+                    "VARCHAR", article.getDefinition().toArray()
+            ));
+            res = statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return res;
     }
 
     @Override
