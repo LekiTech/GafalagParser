@@ -8,6 +8,8 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/gafalag_db</property>
         <property name="hibernate.connection.username">docker</property>
         <property name="hibernate.connection.password">docker</property>
+        <!-- Adds UTC time zone -->
+        <property name="hibernate.jdbc.time_zone">UTC</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="hibernate.connection.pool_size">1</property>
         <!-- Select our SQL dialect -->
