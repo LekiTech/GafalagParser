@@ -18,9 +18,9 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * Date: 12.11.2021
+ * Date: 13.11.2021
  * Project: GafalagParser
- * Class: Language
+ * Class: PartOfSpeech
  *
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
@@ -28,8 +28,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "language")
-public class Language {
+@Entity(name = "part_of_speech")
+public class PartOfSpeech {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +39,6 @@ public class Language {
     @Column(name = "name", nullable = false, length = -1)
     private String name;
     @Basic
-    @Column(name = "iso639_2", length = 2)
-    private String iso6392;
-    @Basic
-    @Column(name = "iso639_3", length = 3)
-    private String iso6393;
-    @Basic
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -52,19 +46,11 @@ public class Language {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-    @OneToMany(mappedBy = "languageByLanguageId")
+    @OneToMany(mappedBy = "partOfSpeechByPartOfSpeechId")
     private Collection<Definition> definitionsById;
-    @OneToMany(mappedBy = "languageByLanguageId")
-    private Collection<Dialect> dialectsById;
-    @OneToMany(mappedBy = "languageByLanguageId")
-    private Collection<Etymology> etymologiesById;
-    @OneToMany(mappedBy = "languageByLanguageId")
-    private Collection<Expression> expressionsById;
 
-    public Language(String name, String iso6392, String iso6393) {
+    public PartOfSpeech(String name) {
         this.name = name;
-        this.iso6392 = iso6392;
-        this.iso6393 = iso6393;
     }
 
     @Override
@@ -75,13 +61,12 @@ public class Language {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Language that = (Language) o;
+        final PartOfSpeech that = (PartOfSpeech) o;
         return this.id == that.id
                 && Objects.equals(this.name, that.name)
-                && Objects.equals(this.iso6392, that.iso6392)
-                && Objects.equals(this.iso6393, that.iso6393)
                 && Objects.equals(this.createdAt, that.createdAt)
-                && Objects.equals(this.updatedAt, that.updatedAt);
+                && Objects.equals(this.updatedAt, that.updatedAt)
+                && Objects.equals(this.definitionsById, that.definitionsById);
     }
 
     @Override
@@ -89,14 +74,9 @@ public class Language {
         return Objects.hash(
                 id,
                 name,
-                iso6392,
-                iso6393,
                 createdAt,
                 updatedAt,
-                definitionsById,
-                dialectsById,
-                etymologiesById,
-                expressionsById
+                definitionsById
         );
     }
 }

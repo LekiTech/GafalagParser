@@ -20,8 +20,8 @@
         <property name="hibernate.use_sql_comments">true</property>
         <!-- Set the current session context -->
         <property name="hibernate.current_session_context_class">thread</property>
-        <!-- Drop and re-create the database schema on startup -->
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <!-- Update the database schema on startup -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <!-- dbcp connection pool configuration -->
         <property name="hibernate.dbcp.initialSize">5</property>
         <property name="hibernate.dbcp.maxTotal">20</property>
@@ -29,6 +29,18 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         <!-- entities -->
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Category"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Definition"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.DefinitionCategory"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Dialect"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Etymology"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Expression"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.ExpressionRelation"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Gender"/>
         <mapping class="org.lekitech.gafalag.hibernate.entity.Language"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Mediafile"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.PartOfSpeech"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.RelationType"/>
+        <mapping class="org.lekitech.gafalag.hibernate.entity.Source"/>
     </session-factory>
 </hibernate-configuration>
