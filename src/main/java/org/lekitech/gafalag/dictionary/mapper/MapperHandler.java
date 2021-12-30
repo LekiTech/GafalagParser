@@ -30,15 +30,18 @@ public class MapperHandler {
     private final List<PdfPage> pdfPages;
     private Predicate<Text> startArticle = text -> text.getX() < 2.65 && text.colorIs(Color.BLUE);
     private Predicate<Text> validTextPositionOfPage = text -> text.getY() > 1.012d;
+    private final int startPage, endPage;
 
     public MapperHandler(String jsonFile) throws IOException {
         pdfPages = new ObjectMapper()
                 .readerFor(new TypeReference<List<PdfPage>>() {})
                 .readValue(new File(jsonFile));
+        this.startPage = (START_PAGE > 1) ? START_PAGE - 1 : 0;
+        this.endPage = (END_PAGE > 2 && END_PAGE > START_PAGE) ? END_PAGE + 1 - START_PAGE : Integer.MAX_VALUE;
     }
 
     public List<Text> pagesToTextTokens() {
-        return pdfPages.stream().skip(START_PAGE).limit(END_PAGE)
+        return pdfPages.stream().skip(startPage).limit(endPage)
                 .flatMap(page -> page.getTextBlocks().stream())
                 .filter(validTextPositionOfPage)
                 .collect(Collectors.toList());

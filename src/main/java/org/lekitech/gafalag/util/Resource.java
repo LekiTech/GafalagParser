@@ -23,8 +23,6 @@ public class Resource {
             END_PAGE = Integer.parseInt(res.getString("parse.pages").split("-")[1]);
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
             log.warning("Input page number like: startPage-endPage");
-            START_PAGE = (START_PAGE > 1) ? START_PAGE - 1 : 0;
-            END_PAGE = (END_PAGE > 2 && END_PAGE > START_PAGE) ? END_PAGE + 1 - START_PAGE : Integer.MAX_VALUE;
         }
     }
 }

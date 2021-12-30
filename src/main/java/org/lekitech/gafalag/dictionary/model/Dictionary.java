@@ -1,7 +1,6 @@
 package org.lekitech.gafalag.dictionary.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.lekitech.gafalag.util.Resource;
 
@@ -19,6 +18,7 @@ import static org.lekitech.gafalag.util.Resource.*;
         "definitionLanguageIso3",
         "dictionary"
 })
+@JsonRootName("source")
 public class Dictionary {
 
     private final String name = DICTIONARY_NAME;
