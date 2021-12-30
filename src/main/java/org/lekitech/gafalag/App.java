@@ -1,14 +1,15 @@
 package org.lekitech.gafalag;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SequenceWriter;
-import lombok.SneakyThrows;
-import org.lekitech.gafalag.dictionarymodels.Article;
-import org.lekitech.gafalag.jsonmodels.Deserializer;
+import org.lekitech.gafalag.dictionary.mapper.Mapper;
+import org.lekitech.gafalag.dictionary.mapper.MapperHandler;
+import org.lekitech.gafalag.dictionary.model.Dictionary;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+
+import static org.lekitech.gafalag.util.Resource.SOURCE_JSON_PATH;
+import static org.lekitech.gafalag.util.Resource.TARGET_JSON_PATH;
 
 /**
  * Date: 12.11.2021
@@ -20,28 +21,13 @@ import java.util.List;
  */
 public class App {
 
-    @SneakyThrows(value = IOException.class)
-    public static void main(String[] args) {
-        final DictionaryMapper mapper = new DictionaryMapper(new Deserializer("srcfiles/dictionary.json"));
-        final List<Article> dictionary = mapper.init().getDictionary();
-        SequenceWriter jsonToFile = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValues(new File("lezgi_russian_dictionary.json"));
-        jsonToFile.write(dictionary);
-
-        // Transaction transaction = null;
-        // try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        //     final Language lezgi = new Language("Lezgi", "lz", "lez");
-        //     final Language russian = new Language("Russian", "ru", "rus");
-        //     transaction = session.beginTransaction();
-        //     session.save(lezgi);
-        //     session.save(russian);
-        //     transaction.commit();
-        // } catch (Exception e) {
-        //     if (transaction != null) {
-        //         transaction.rollback();
-        //     }
-        //     e.printStackTrace();
-        // }
-        // final DBConnection connection = new DBConnection();
-        // dictionary.forEach(connection::add);
+    public static void main(String[] args) throws IOException {
+        final MapperHandler handler = new MapperHandler(SOURCE_JSON_PATH);
+        final Mapper mapper = new Mapper(handler).init();
+        final Dictionary dictionary = mapper.getDictionary();
+        new ObjectMapper()
+                .writerWithDefaultPrettyPrinter()
+                .writeValues(new File(TARGET_JSON_PATH))
+                .write(dictionary);
     }
 }
