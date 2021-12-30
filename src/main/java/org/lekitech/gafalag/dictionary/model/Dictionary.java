@@ -2,7 +2,6 @@ package org.lekitech.gafalag.dictionary.model;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
-import org.lekitech.gafalag.util.Resource;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package org.lekitech.gafalag;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.lekitech.gafalag.dictionary.mapper.Mapper;
 import org.lekitech.gafalag.dictionary.mapper.MapperHandler;
 import org.lekitech.gafalag.dictionary.model.Dictionary;
@@ -26,6 +27,7 @@ public class App {
         final Mapper mapper = new Mapper(handler).init();
         final Dictionary dictionary = mapper.getDictionary();
         new ObjectMapper()
+                .enable(SerializationFeature.WRAP_ROOT_VALUE)
                 .writerWithDefaultPrettyPrinter()
                 .writeValues(new File(TARGET_JSON_PATH))
                 .write(dictionary);
