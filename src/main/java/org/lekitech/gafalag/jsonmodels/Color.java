@@ -1,5 +1,8 @@
 package org.lekitech.gafalag.jsonmodels;
 
+import lombok.RequiredArgsConstructor;
+import org.lekitech.gafalag.exception.UnsupportedColorException;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -11,6 +14,7 @@ import java.util.Objects;
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
+@RequiredArgsConstructor
 public enum Color {
 
     // color dictionary: https://github.com/modesty/pdf2json
@@ -91,18 +95,17 @@ public enum Color {
 
     private final String hex;
 
-    Color(String hex) {
-        this.hex = hex;
+    public static Color of(int color) throws UnsupportedColorException {
+        return Arrays.stream(values())
+                .filter(clr -> Objects.equals(clr.hex, colors[color]))
+                .findFirst()
+                .orElseThrow(() -> new UnsupportedColorException("Unknown color: " + color));
     }
 
-    public static Color of(Text text) {
-        // When a color is not in style dictionary, "clr" value will be set to -1
-        var colorHex = text.getOriginalColor() == null
-                ? colors[text.getClr()]
-                : text.getOriginalColor();
+    public static Color of(String color) throws UnsupportedColorException {
         return Arrays.stream(values())
-                .filter(color -> Objects.equals(color.hex, colorHex))
+                .filter(clr -> Objects.equals(clr.hex, color))
                 .findFirst()
-                .orElse(BLACK);
+                .orElseThrow(() -> new UnsupportedColorException("Unknown color: " + color));
     }
 }

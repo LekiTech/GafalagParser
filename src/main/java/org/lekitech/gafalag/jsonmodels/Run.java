@@ -2,7 +2,7 @@ package org.lekitech.gafalag.jsonmodels;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
-@Getter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Run {
 

@@ -2,8 +2,8 @@ package org.lekitech.gafalag.jsonmodels;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
-import lombok.SneakyThrows;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,38 +18,47 @@ import java.util.stream.Collectors;
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
+@NoArgsConstructor
 public class Deserializer {
 
-    private final List<Page> pages;
-    @Getter
-    private List<Text> tokens;
+    private List<PdfPage> pdfPages;
     private int beginPage;
     private int endPage;
 
-    @SneakyThrows(value = IOException.class)
-    public Deserializer(String srcValue) {
-        pages = new ObjectMapper().readerFor(new TypeReference<List<Page>>() {
-        }).readValue(new File(srcValue));
+    public Deserializer(@NonNull String jsonFile) {
+        initPages(jsonFile);
     }
 
-    @SneakyThrows(value = IOException.class)
-    public Deserializer(String srcValue, int beginPage, int endPage) {
+    public Deserializer(@NonNull String jsonFile, int beginPage, int endPage) {
         this.beginPage = beginPage;
         this.endPage = endPage;
-        pages = new ObjectMapper().readerFor(new TypeReference<List<Page>>() {
-        }).readValue(new File(srcValue));
+        initPages(jsonFile);
     }
 
-    public Deserializer initTokens() {
-        if (beginPage == 0 && endPage == 0) {
-            tokens = pages.stream().flatMap(page -> page.getTextBlocks().stream())
-                    .collect(Collectors.toList());
-        } else {
-            tokens = pages.stream().skip(beginPage > 1 ? beginPage - 1 : 0)
-                    .limit(endPage > 2 && endPage > beginPage ? endPage + 1 - beginPage : 1)
-                    .flatMap(page -> page.getTextBlocks().stream())
-                    .collect(Collectors.toList());
+    private void initPages(String jsonFile) {
+        try {
+            pdfPages = new ObjectMapper().readerFor(new TypeReference<List<PdfPage>>() {}).readValue(new File(jsonFile));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return this;
+    }
+
+    public List<Text> initTokens() {
+        return pdfPages.stream()
+                .skip(beginPage > 1 ? beginPage - 1 : 0)
+                .limit((endPage > 2 && endPage > beginPage) ? endPage + 1 - beginPage : 1)
+                .flatMap(pdfPage -> pdfPage.getTextBlocks().stream())
+                .collect(Collectors.toList());
+        // List<Text> tokens;
+        // if (beginPage == 0 && endPage == 0) {
+        //     tokens = pdfPages.stream().flatMap(pdfPage -> pdfPage.getTextBlocks().stream())
+        //             .collect(Collectors.toList());
+        // } else {
+        //     tokens = pdfPages.stream().skip(beginPage > 1 ? beginPage - 1 : 0)
+        //             .limit(endPage > 2 && endPage > beginPage ? endPage + 1 - beginPage : 1)
+        //             .flatMap(pdfPage -> pdfPage.getTextBlocks().stream())
+        //             .collect(Collectors.toList());
+        // }
+        // return tokens;
     }
 }

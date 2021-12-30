@@ -2,7 +2,7 @@ package org.lekitech.gafalag.jsonmodels;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
 
@@ -10,16 +10,16 @@ import java.util.List;
  * Date: 15.10.2021
  * Project: GafalagParser
  * <p>
- * Class: Page - JSON Model from PDF page
+ * Class: PdfPage - JSON Model from PDF page
  * <p>
  * <a href='https://github.com/modesty/pdf2json'>PDF Parser to JSON</a>
  *
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
-@Getter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Page {
+public class PdfPage {
 
     @JsonProperty("Height")
     private double height;
@@ -34,5 +34,5 @@ public class Page {
     @JsonProperty("Fields")
     private List<Object> fields;
     @JsonProperty("Boxsets")
-    private List<Object> boxsets;
+    List<Object> boxSets;
 }

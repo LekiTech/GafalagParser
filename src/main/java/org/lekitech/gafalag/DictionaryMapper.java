@@ -2,9 +2,7 @@ package org.lekitech.gafalag;
 
 import lombok.Getter;
 import org.lekitech.gafalag.dictionarymodels.Article;
-import org.lekitech.gafalag.jsonmodels.Color;
-import org.lekitech.gafalag.jsonmodels.Deserializer;
-import org.lekitech.gafalag.jsonmodels.Text;
+import org.lekitech.gafalag.jsonmodels.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +25,14 @@ public class DictionaryMapper {
     private final List<Article> dictionary = new ArrayList<>();
 
     public DictionaryMapper(Deserializer deserializer) {
-        this.deserializer = deserializer.initTokens();
+        this.deserializer = deserializer;
     }
 
     public DictionaryMapper init() {
-        // valid page area
-        final Predicate<Text> valid = text -> text.getY() > 1.012d;
-        final List<Text> tokens = deserializer.getTokens()
+        final Predicate<Text> validTextPositionOfPage = text -> text.getY() > 1.012d;
+        final List<Text> tokens = deserializer.initTokens()
                 .stream()
-                .filter(valid)
+                .filter(validTextPositionOfPage)
                 .collect(Collectors.toList());
         final Predicate<Text> startArticle = text -> text.getX() < 2.65 && text.colorIs(Color.BLUE);
         StringBuilder head = new StringBuilder();
