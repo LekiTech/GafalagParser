@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static org.lekitech.gafalag.util.Resource.END_PAGE;
+import static org.lekitech.gafalag.util.Resource.START_PAGE;
+
 /**
  * Date: 11.11.2021
  * Project: GafalagParser
@@ -27,7 +30,6 @@ public class MapperHandler {
     private final List<PdfPage> pdfPages;
     private Predicate<Text> startArticle = text -> text.getX() < 2.65 && text.colorIs(Color.BLUE);
     private Predicate<Text> validTextPositionOfPage = text -> text.getY() > 1.012d;
-    private int startPage = 0, lastPage = Integer.MAX_VALUE;
 
     public MapperHandler(String jsonFile) throws IOException {
         pdfPages = new ObjectMapper()
@@ -35,14 +37,8 @@ public class MapperHandler {
                 .readValue(new File(jsonFile));
     }
 
-    public MapperHandler setPagesInterval(int startPage, int lastPage) {
-        this.startPage = (startPage > 1) ? startPage - 1 : 0;
-        this.lastPage = (lastPage > 2 && lastPage > startPage) ? lastPage + 1 - startPage : 1;
-        return this;
-    }
-
     public List<Text> pagesToTextTokens() {
-        return pdfPages.stream().skip(startPage).limit(lastPage)
+        return pdfPages.stream().skip(START_PAGE).limit(END_PAGE)
                 .flatMap(page -> page.getTextBlocks().stream())
                 .filter(validTextPositionOfPage)
                 .collect(Collectors.toList());

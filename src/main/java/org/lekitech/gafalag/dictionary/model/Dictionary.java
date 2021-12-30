@@ -1,13 +1,16 @@
 package org.lekitech.gafalag.dictionary.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
 import static org.lekitech.gafalag.util.Resource.*;
 
-@Value
+@Data
+@RequiredArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "name",
         "url",
@@ -17,9 +20,9 @@ import static org.lekitech.gafalag.util.Resource.*;
 })
 public class Dictionary {
 
-    String name = DICTIONARY_NAME;
-    String url = DICTIONARY_URL;
-    String sourceLangIso3 = SOURCE_LANG_ISO_3;
-    String targetLangIso3 = TARGET_LANG_ISO_3;
-    List<Article> dictionary;
+    private final String name = DICTIONARY_NAME;
+    private final String url = DICTIONARY_URL;
+    private final String sourceLangIso3 = SOURCE_LANG_ISO_3;
+    private final String targetLangIso3 = TARGET_LANG_ISO_3;
+    private final @NonNull List<Article> dictionary;
 }

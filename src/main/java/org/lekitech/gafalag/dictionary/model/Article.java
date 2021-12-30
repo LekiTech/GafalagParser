@@ -1,9 +1,8 @@
 package org.lekitech.gafalag.dictionary.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
@@ -17,8 +16,10 @@ import java.util.List;
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
-@Value
-@JsonInclude(Include.NON_NULL)
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "spelling",
         "inflection",
@@ -29,13 +30,13 @@ public class Article {
     /**
      * Заглавное слово, сведения о его орфографии, произношении, ударении.
      */
-    String spelling;
+    private final @NonNull String spelling;
     /**
      * Опорные словоформы, возможные варианты.
      */
-    String inflection;
+    private String inflection;
     /**
      * Зона значения: семантика, фразеологизмы, метки
      */
-    List<String> definitions;
+    private final @NonNull List<String> definitions;
 }

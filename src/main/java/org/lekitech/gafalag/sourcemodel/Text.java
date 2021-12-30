@@ -2,7 +2,7 @@ package org.lekitech.gafalag.sourcemodel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 import org.lekitech.gafalag.sourcemodel.exception.UnsupportedColorException;
 
 import java.util.List;
@@ -16,20 +16,17 @@ import java.util.List;
  * @version 1.0
  */
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Text {
 
-    @JsonProperty("clr")
     private int clr;
-
+    private double x, y, w, sw;
     @JsonProperty("oc")
     private String originalColor;
-
-    private double x, y, w, sw;
-
     @JsonProperty("A")
     private String alignment;
-
     @JsonProperty("R")
     private List<Run> run; // an array of text run
 

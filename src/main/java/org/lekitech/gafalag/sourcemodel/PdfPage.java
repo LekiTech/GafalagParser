@@ -2,7 +2,7 @@ package org.lekitech.gafalag.sourcemodel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
@@ -18,6 +18,8 @@ import java.util.List;
  * @version 1.0
  */
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PdfPage {
 
@@ -34,5 +36,5 @@ public class PdfPage {
     @JsonProperty("Fields")
     private List<Object> fields;
     @JsonProperty("Boxsets")
-    List<Object> boxSets;
+    private List<Object> boxSets;
 }

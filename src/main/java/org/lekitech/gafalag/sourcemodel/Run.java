@@ -21,6 +21,8 @@ import java.util.List;
  * @version 1.0
  */
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Run {
 

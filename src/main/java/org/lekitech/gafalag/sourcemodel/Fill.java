@@ -1,7 +1,8 @@
 package org.lekitech.gafalag.sourcemodel;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Value;
+import lombok.*;
 
 /**
  * Date: 06.11.2021
@@ -14,16 +15,19 @@ import lombok.Value;
  * @author Enver Eskendarov (envereskendarov@gmail.com)
  * @version 1.0
  */
-@Value
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Fill {
 
-    double x, y;
+    private double x, y;
     @JsonProperty("w")
-    double width;
+    private double width;
     @JsonProperty("h")
-    double height;
+    private double height;
     @JsonProperty("clr")
-    int color;
+    private int color;
     @JsonProperty("oc")
-    String originalColor;
+    private String originalColor;
 }
