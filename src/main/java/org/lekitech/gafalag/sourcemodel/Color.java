@@ -26,6 +26,7 @@ public enum Color {
     DARK_GRAY1("#4c4c4c"),
     DARK_GRAY2("#808080"),
     DARK_GRAY3("#999999"),
+    DARK_GRAY4("#969696"),
     LIGHT_GRAY1("#c0c0c0"),
     LIGHT_GRAY2("#cccccc"),
     LIGHT_GRAY3("#e5e5e5"),
